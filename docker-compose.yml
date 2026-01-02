@@ -1,0 +1,21 @@
+# docker-compose.yml
+version: '3'
+
+services:
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+  stun_server:
+    build: ./server
+    ports:
+      - "5000:5000"
+    depends_on:
+      - redis
+    environment:
+      REDIS_HOST: redis
+
+networks:
+  default:
+    name: p2p_network
